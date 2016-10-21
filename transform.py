@@ -1,10 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
-import json
-import os
 import re
 import struct
 import sys
+
+RE_TWITTER_USERNAME = re.compile(r"@\w{1,15}")
 
 
 # This is a bit of boilerplate that handles the way that incoming records are
@@ -13,10 +13,10 @@ import sys
 # records and yields them one by one.
 def transform_records():
     while True:
-        byte_len = sys.stdin.buffer.read(8)
+        byte_len = sys.stdin.read(8)
         if len(byte_len) == 8:
             byte_len = struct.unpack("L", byte_len)[0]
-            result = sys.stdin.buffer.read(byte_len)
+            result = sys.stdin.read(byte_len)
             yield result.decode("utf-8", "replace")
         else:
             assert len(byte_len) == 0, byte_len
@@ -25,14 +25,13 @@ def transform_records():
 
 # Iterate over the records that we receive from Kafka.
 for line in transform_records():
+    (tid, _, _, _, username, body) = line.split("\t")
 
-    (id, timestamp, retweet_count, favorite_count, username, body) = line.split("\t")
-
-    pattern = re.compile(r"@\w{1,15}", re.ASCII)
-    linked_usernames = re.finditer(pattern, body)
-
-    for link in linked_usernames:
+    for link in re.finditer(RE_TWITTER_USERNAME, body):
+        sys.stdout.write(tid)
+        sys.stdout.write("\t")
         sys.stdout.write(username)
         sys.stdout.write("\t")
+        # The [1:] is to strip the @ sign
         sys.stdout.write(link.group(0)[1:])
         sys.stdout.write("\n")
