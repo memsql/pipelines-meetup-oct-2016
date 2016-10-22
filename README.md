@@ -3,17 +3,21 @@ MemSQL Pipelines Meetup
 
 1. Run the MemSQL quickstart docker image with the included schema file.
 
-    docker run -d -v $(PWD)/schema.sql:/schema.sql -p 3306:3306 -p 9000:9000 --name=memsql memsql/quickstart
+```bash
+docker run -d -v $(PWD)/schema.sql:/schema.sql -p 3306:3306 -p 9000:9000 --name=memsql memsql/quickstart
+```
 
 2. Open up the MemSQL Ops UI at http://localhost:9000
 
 3. On the pipeline page create the first Pipeline:
 
+```
     Kafka Hostname: public-kafka.memcompute.com
     Kafka Topic: pipelines-meetup
 
     Database: twitter
     Table: tweets
+```
 
 4. On the pipeline page create another pipeline, but upload the included
    transform.py file and use the `tweet_links` table.
