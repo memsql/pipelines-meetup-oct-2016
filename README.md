@@ -13,7 +13,7 @@ docker run -d -v $(PWD)/schema.sql:/schema.sql -p 3306:3306 -p 9000:9000 --name=
 
 ```
     Kafka Hostname: public-kafka.memcompute.com
-    Kafka Topic: pipelines-meetup
+    Kafka Topic: tweets
 
     Database: twitter
     Table: tweets
