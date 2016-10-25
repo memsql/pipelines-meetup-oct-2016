@@ -60,7 +60,7 @@ LIMIT 10
 SELECT ref_username, COUNT(DISTINCT username) AS num_unique_references
 FROM tweet_links
 GROUP BY ref_username
-ORDER BY num_references DESC
+ORDER BY num_unique_references DESC
 LIMIT 10
 ```
 
@@ -70,10 +70,11 @@ LIMIT 10
 SELECT edge, COUNT(*)
 FROM (
     SELECT
-        IF username < ref_username
-            THEN CONCAT(username, ref_username)
-            ELSE CONCAT(ref_username, username)
-        END IF AS edge
+        IF (
+            username < ref_username,
+            CONCAT(username, " -> ", ref_username),
+            CONCAT(ref_username, " -> ", username)
+        ) AS edge
     FROM tweet_links
 ) AS mapper
 GROUP BY 1
