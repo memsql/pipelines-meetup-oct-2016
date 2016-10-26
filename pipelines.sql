@@ -10,9 +10,10 @@ CREATE PIPELINE twitter_pipeline AS
 ALTER PIPELINE twitter_pipeline SET OFFSETS LATEST;
 START PIPELINE twitter_pipeline;
 
+
 CREATE PIPELINE links_pipeline AS
     LOAD DATA KAFKA "public-kafka.memcompute.com/tweets"
-    WITH TRANSFORM ("file:///home/admin/transform.py", "", "")
+    WITH TRANSFORM ("http://download.memsql.com/pipelines-twitter-demo/transform-meetup-oct25.py", "", "")
     INTO TABLE tweet_links
     FIELDS TERMINATED BY "\t"
     (a, b);
