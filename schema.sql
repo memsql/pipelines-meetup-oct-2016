@@ -17,5 +17,5 @@ CREATE TABLE tweet_links (
     id TEXT,
     username TEXT,
     ref_username TEXT,
-    PRIMARY KEY (username)
+    SHARD KEY (username)
 );
