@@ -16,7 +16,7 @@ CREATE PIPELINE links_pipeline AS
     WITH TRANSFORM ("http://download.memsql.com/pipelines-twitter-demo/transform-meetup-oct25.py", "", "")
     INTO TABLE tweet_links
     FIELDS TERMINATED BY "\t"
-    (a, b);
+    (username, ref_username);
 
 
 ALTER PIPELINE links_pipeline SET OFFSETS LATEST;
