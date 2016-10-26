@@ -17,5 +17,5 @@ CREATE TABLE tweet_links (
     id TEXT,
     username TEXT,
     ref_username TEXT,
-    SHARD KEY (username) USING CLUSTERED COLUMNSTORE
+    PRIMARY KEY (username)
 );
