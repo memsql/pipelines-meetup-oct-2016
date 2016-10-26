@@ -1,15 +1,37 @@
 MemSQL Pipelines Meetup
 =======================
 
-1. Run the MemSQL quickstart docker image with the included schema file.
+Setup with Docker
+-----------------
+
+* Run the MemSQL Quickstart Docker image with the included schema file.
 
 ```bash
 docker run -d -v $(PWD)/schema.sql:/schema.sql -p 3306:3306 -p 9000:9000 --name=memsql memsql/quickstart
 ```
 
-2. Open up the MemSQL Ops UI at http://localhost:9000
+* Open up the MemSQL Ops UI at http://localhost:9000.
 
-3. On the pipeline page create the first Pipeline:
+* Connect to the MemSQL database using `docker run --rm -it --link=memsql:memsql
+  memsql/quickstart memsql-shell`.
+
+Setup without Docker
+--------------------
+
+* Ask John for a cloud machine. You will get a "hostname" and a "password".
+
+* Open up the MemSQL Ops UI at http://<hostname>:9000. The username is "memsql",
+  and the password is the one given to you.
+
+* Connect to the MemSQL database using the MySQL Client: `mysql -u root -h
+  <hostname> -p <password>`. Or, use your favorite MySQL-compatible client.
+
+Create Pipelines
+----------------
+
+* Navigate to "Data Sources" > "Pipelines">
+
+* On the Pipelines page, create the first Pipeline:
 
 ```
     Kafka Hostname: public-kafka.memcompute.com
@@ -19,11 +41,12 @@ docker run -d -v $(PWD)/schema.sql:/schema.sql -p 3306:3306 -p 9000:9000 --name=
     Table: tweets
 ```
 
-4. On the pipeline page create another pipeline, but upload the included
-   transform.py file and use the `tweet_links` table.
+* On the Pipelines page, create another pipeline, but upload the transform.py
+  file included in this repo, and use the `tweet_links` table instead of the
+  `tweets` table.
 
 Example Queries
-===============
+---------------
 
 **Top 10 most prolific users:**
 
