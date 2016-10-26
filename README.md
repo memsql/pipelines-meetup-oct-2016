@@ -38,8 +38,9 @@ LIMIT 10
 **Top 10 most retweeted tweets:**
 
 ```sql
-SELECT username, body, retweet_count
+SELECT username, body, MAX(retweet_count)
 FROM tweets
+GROUP BY body
 ORDER BY retweet_count DESC
 LIMIT 10
 ```
@@ -64,7 +65,7 @@ ORDER BY num_unique_references DESC
 LIMIT 10
 ```
 
-**Top 10 pairs of users by mututal conversation:**
+**Top 10 pairs of users by mutual conversation:**
 
 ```sql
 SELECT edge, COUNT(*)
